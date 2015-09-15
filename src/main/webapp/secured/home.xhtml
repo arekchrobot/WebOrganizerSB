@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/scrollableLayout.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton value="#{myMessages['schedule.button.add']}"
+                             onclick="PF('addEvent').show();"/>
+            <p:commandButton value="#{myMessages['schedule.button.delete']}"/>
+            <h:panelGrid columnClasses="schedule-width">
+                #{myMessages['schedule.header']}
+                <p:schedule value="#{scheduleView.schedule}"
+                            locale="#{localeManager.language}">
+                    <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}"
+                            update="editEventForm" oncomplete="PF('editEvent').show();"/>
+                </p:schedule>
+            </h:panelGrid>
+        </h:form>
+
+        <p:dialog header="#{myMessages['schedule.pupup.event.add.header']}"
+                  widgetVar="addEvent" height="75%" width="75%"
+                  resizable="false" showEffect="clip" hideEffect="blind"
+                  appendTo="@(body)" modal="true">
+            <ui:include src="/WEB-INF/fragments/addEvent.xhtml"/>
+        </p:dialog>
+
+        <p:dialog header="#{myMessages['schedule.pupup.event.edit.header']}"
+                  widgetVar="editEvent" height="75%" width="75%"
+                  resizable="false" showEffect="clip" hideEffect="blind"
+                  appendTo="@(body)" modal="true">
+            <ui:include src="/WEB-INF/fragments/editEvent.xhtml"/>
+        </p:dialog>
+        <p:growl severity="info" id="growler" showDetail="true"/>
+    </ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,31 @@
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+              version="2.2">
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>pl</supported-locale>
+        </locale-config>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+        <message-bundle>
+            CustomValidationMessages
+        </message-bundle>
+        <resource-bundle>
+            <base-name>MyMessages</base-name>
+            <var>myMessages</var>
+        </resource-bundle>
+    </application>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/j_spring_security_logout?faces-redirect=true</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <validator>
+        <validator-id>eventDateRangeValidator</validator-id>
+        <validator-class>ark.chr.web.organizer.validators.EventDateRangeValidator</validator-class>
+    </validator>
+</faces-config>

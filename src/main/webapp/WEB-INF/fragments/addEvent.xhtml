@@ -1,0 +1,80 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <p:panelGrid columns="2" style="width: 100%" columnClasses="twenty-percent, eighty-percent">
+            <p:outputLabel value="#{myMessages['event.form.name.label']} "
+                           for="name"/>
+            <p:column>
+                <p:inputText value="#{events.event.name}" styleClass="label-percent"
+                             required="true" id="name"
+                             requiredMessage="#{myMessages['event.form.name.requiredMessage']}"/>
+                <p:message for="name" style="color:red"/>
+            </p:column>
+
+            <p:outputLabel value="#{myMessages['event.form.startDate.label']} "
+                           for="dateStart"/>
+            <p:column>
+                <p:calendar id="dateStart" value="#{events.event.eventDateStart}"
+                            locale="#{localeManager.language}"
+                            pattern="dd/MM/yyyy HH:mm:ss" required="true">
+                    <p:ajax event="dateSelect" update="dateEnd"/>
+                </p:calendar>
+            </p:column>
+
+            <p:outputLabel value="#{myMessages['event.form.endDate.label']} "
+                           for="dateEnd"/>
+            <p:column>
+                <p:calendar id="dateEnd" value="#{events.event.eventDateEnd}"
+                            locale="#{localeManager.language}"
+                            mindate="#{events.event.eventDateStart}"
+                            pattern="dd/MM/yyyy HH:mm:ss" required="true">
+                    <f:attribute name="startDate" value="#{events.event.eventDateStart}"/>
+                    <f:validator validatorId="eventDateRangeValidator"/>
+                </p:calendar>
+            </p:column>
+
+            <p:outputLabel value="#{myMessages['event.form.description.label']}"
+                           for="description"/>
+            <p:column>
+                <p:inputText id="description" value="#{events.event.description}"
+                             styleClass="label-percent"/>
+                <p:message for="description" style="color:red"/>
+            </p:column>
+
+            <p:outputLabel value="#{myMessages['event.form.address.label']}"
+                           for="address"/>
+            <p:column>
+                <p:inputText id="address" value="#{events.event.address}"
+                             styleClass="label-percent"/>
+                <p:message for="address" style="color:red"/>
+            </p:column>
+
+            <p:outputLabel value="#{myMessages['event.form.priority.label']}"
+                           for="prior"/>
+            <p:column>
+                <p:selectOneMenu id="prior" value="#{events.event.priority}" required="true"
+                                 requiredMessage="#{myMessages['event.form.priority.requiredMessage']}">
+                    <f:selectItems value="#{events.priorities}" var="priority"
+                                   itemValue="#{priority}" itemLabel="#{priority.name()}"/>
+                </p:selectOneMenu>
+                <p:message for="prior" style="color:red"/>
+            </p:column>
+
+            <p:outputLabel value="#{myMessages['event.form.reminder.label']}" for="reminder"/>
+            <p:column>
+                <p:inputText id="reminder" value="#{events.event.customReminder}"
+                             styleClass="label-percent"
+                             validatorMessage="#{myMessages['event.form.reminder.validatorMessage']}">
+                    <f:convertNumber integerOnly="true"/>
+                </p:inputText>
+                <p:message for="reminder" style="color:red"/>
+            </p:column>
+        </p:panelGrid>
+        <p:commandButton value="#{myMessages['event.add.form.button']}"
+                         action="#{events.addNewEvent()}"/>
+    </h:form>
+</ui:composition>

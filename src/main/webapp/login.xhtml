@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+        >
+
+<ui:composition template="/WEB-INF/templates/noscrollableLayout.xhtml">
+    <ui:define name="title">#{myMessages['login.title']}</ui:define>
+    <ui:define name="content">
+        <h:form id="login" prependId="false"
+                onsubmit="document.#{p:component('login')}.action = '#{request.contextPath}/j_spring_security_check';">
+            <!--onsubmit="document.#{p:component('login')}.action = '#{request.contextPath}/login';">-->
+
+            <p:panel header="#{myMessages['login.panel.header']}" styleClass="panel-layout">
+                <p:panelGrid columns="2" style="width: 100%" columnClasses="twenty-percent, eighty-percent">
+                    <p:outputLabel value="#{myMessages['login.form.email.label']} "
+                                   for="username"/>
+                    <p:inputText id="username" required="true" styleClass="label-percent"/>
+
+                    <p:outputLabel value="#{myMessages['login.form.password.label']} "
+                                   for="password"/>
+                    <p:password id="password" required="true" styleClass="label-percent"/>
+                </p:panelGrid>
+
+                <p:commandButton value="#{myMessages['login.form.button.value']}"
+                                 type="submit" ajax="false"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>

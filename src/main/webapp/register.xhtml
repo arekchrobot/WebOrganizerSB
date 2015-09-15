@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+        >
+
+<ui:composition template="/WEB-INF/templates/noscrollableLayout.xhtml">
+    <ui:define name="title">#{myMessages['register.title']}</ui:define>
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="growl" showDetail="true" severity="fatal"/>
+            <p:panel header="#{myMessages['register.panel.header']}" styleClass="panel-layout">
+                <p:panelGrid columns="2" style="width: 100%" columnClasses="twenty-percent, eighty-percent">
+                    <p:outputLabel value="#{myMessages['register.form.email.label']} " for="login"/>
+                    <p:column>
+                        <p:inputText value="#{register.registerUser.login}" styleClass="label-percent"
+                                     required="true" id="login"
+                                     validatorMessage="#{myMessages['register.form.email.validatorMessage']}"
+                                     requiredMessage="#{myMessages['register.form.email.requiredMessage']}">
+                            <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
+                        <p:message for="login" style="color:red" />
+                    </p:column>
+
+                    <p:outputLabel value="#{myMessages['register.form.password.label']} " for="pass"/>
+                    <p:column>
+                        <p:password id="pass" value="#{register.registerUser.password}"
+                                    required="true" requiredMessage="#{myMessages['register.form.password.requiredMessage']}"
+                                    match="confirmPass" styleClass="label-percent"/>
+                        <p:message for="pass" style="color:red" />
+                    </p:column>
+
+                    <p:outputLabel value="#{myMessages['register.form.confirmPassword.label']} " for="confirmPass"/>
+                    <p:column>
+                        <p:password id="confirmPass" required="true" styleClass="label-percent"
+                                    requiredMessage="#{myMessages['register.form.password.requiredMessage']}"/>
+                        <p:message for="confirmPass" style="color:red" />
+                    </p:column>
+
+                    <p:outputLabel value="#{myMessages['register.form.username.label']} " for="username"/>
+                    <p:column>
+                        <p:inputText id="username" required="true" value="#{register.registerUser.name}"
+                                     requiredMessage="#{myMessages['register.form.username.requiredMessage']}"
+                                     styleClass="label-percent"/>
+                        <p:message for="username" style="color:red"/>
+                    </p:column>
+
+                </p:panelGrid>
+                <p:commandButton value="#{myMessages['register.form.button.value']}"
+                                 action="#{register.registerNewUser()}" ajax="false"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>

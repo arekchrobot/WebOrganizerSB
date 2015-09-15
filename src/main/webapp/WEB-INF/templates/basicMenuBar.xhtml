@@ -1,0 +1,37 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:sec="http://www.springframework.org/security/tags">
+    <h:form>
+        <p:menubar id="menuBar" style="width:98%">
+            <f:facet name="options">
+                <h:form>
+                    <p:outputLabel value="#{myMessages['menubar.language.label']}: "/>
+                    <p:selectOneMenu value="#{localeManager.language}" onchange="submit()"
+                                     styleClass="vertial-center">
+                        <f:selectItem itemValue="en" itemLabel="English"/>
+                        <f:selectItem itemValue="pl" itemLabel="Polski"/>
+                    </p:selectOneMenu>
+                    <sec:authorize ifAnyGranted="ROLE_USER">
+                        <p:button value="#{myMessages['menubar.button.logout']}"
+                                  outcome="logout" icon="fa fa-sign-out"
+                                  styleClass="vertial-center"/>
+                    </sec:authorize>
+                    <sec:authorize ifNotGranted="ROLE_USER">
+                        <p:button value="#{myMessages['menubar.button.login']}"
+                                  outcome="login" icon="fa fa-sign-in"
+                                  styleClass="vertial-center"/>
+                        <p:button value="#{myMessages['menubar.button.register']}"
+                                  outcome="register" icon="fa fa-plus-square-o"
+                                  styleClass="vertial-center"/>
+                    </sec:authorize>
+                </h:form>
+            </f:facet>
+        </p:menubar>
+        <p:sticky target="menuBar"/>
+    </h:form>
+    <br/>
+</ui:composition>
